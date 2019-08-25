@@ -1,10 +1,11 @@
 import re
 import pandas as pd
+import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 
 
-def generate_tokens(filename, char_level=False, sample=100, seq_len=20):
+def generate_tokens(filename, char_level=False, sample=None, seq_len=20):
     df = preprocessing(filename, n=sample)
 
     start_token = ('| ' * seq_len)
@@ -20,7 +21,9 @@ def generate_tokens(filename, char_level=False, sample=100, seq_len=20):
 
 
 def preprocessing(filename, sep=";", n=100):
-    poems = pd.read_csv(filename, sep=sep).sample(n=n)
+    poems = pd.read_csv(filename, sep=sep)
+    if n is not None:
+        poems = poems.sample(n=n)
     poems.text = poems.text.astype(str)
     poems['text'] = poems['text'].map(lambda x: x if type(x) != str else x.lower())
     return poems
@@ -35,4 +38,4 @@ def generate_sequences(tokens, token_len, seq_len):
 
     y = np_utils.to_categorical(y, num_classes=token_len)
 
-    return X, y, len(X)
+    return np.array(X), np.array(y), len(X)
