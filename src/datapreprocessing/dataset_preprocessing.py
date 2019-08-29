@@ -17,7 +17,7 @@ def generate_tokens(filename, char_level=False, sample=None, seq_len=20):
 
     tokens = tokenizer.texts_to_sequences([texts])[0]
 
-    return tokens, tokenizer.word_index, len(tokenizer.word_index)+1
+    return tokens, tokenizer.word_index, len(tokenizer.word_index)+1, tokenizer
 
 
 def preprocessing(filename, sep=";", n=100):
