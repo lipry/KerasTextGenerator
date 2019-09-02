@@ -32,10 +32,10 @@ if __name__ == "__main__":
     start_token = ('| ' * seq_len)
     imput_file = "data/poems.csv"
     seq_len = 20
-    n_sample = 50
+    n_sample = None
     embedding_size = 100
     units = 256
-    epochs = 10
+    epochs = 100
     batch_size = 32
 
 
