@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-py3
+FROM nvcr.io/nvidia/tensorflow
 
 # Install system packages
 RUN apt-get update
