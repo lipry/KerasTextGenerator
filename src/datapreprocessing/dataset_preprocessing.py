@@ -1,12 +1,19 @@
 import re
 import pandas as pd
-import numpy as np
 from keras.preprocessing.text import Tokenizer
-from keras.utils import np_utils
 
 
-def generate_tokens(filename, char_level=False, sample=None, seq_len=20):
-    df = preprocessing(filename, n=sample)
+def preprocessing(filename, sep=";"):
+    poems = pd.read_csv(filename, sep=sep)
+    poems.text = poems.text.astype(str)
+    poems['text'] = poems['text'].map(lambda x: x if type(x) != str else x.lower())
+    return poems
+
+
+def generate_tokens(filename, n_sample=None, char_level=False, seq_len=20):
+    df = preprocessing(filename)
+    if n_sample is not None:
+        df = df.sample(n=n_sample)
 
     start_token = ('| ' * seq_len)
     texts = '\n'.join((start_token + " " + df['text']).tolist())
@@ -20,22 +27,13 @@ def generate_tokens(filename, char_level=False, sample=None, seq_len=20):
     return tokens, tokenizer.word_index, len(tokenizer.word_index)+1, tokenizer
 
 
-def preprocessing(filename, sep=";", n=100):
-    poems = pd.read_csv(filename, sep=sep)
-    if n is not None:
-        poems = poems.sample(n=n)
-    poems.text = poems.text.astype(str)
-    poems['text'] = poems['text'].map(lambda x: x if type(x) != str else x.lower())
-    return poems
-
-
-def generate_sequences(tokens, token_len, seq_len):
+def generate_sequences(tokens, seq_len):
     X = []
     y = []
     for i in range(0, len(tokens) - seq_len):
         X.append(tokens[i:i+seq_len])
-        y.append(tokens[i + seq_len])
+        y.append(tokens[i+seq_len])
+    return X, y, len(X)
 
-    y = np_utils.to_categorical(y, num_classes=token_len)
 
-    return np.array(X), np.array(y), len(X)
+
