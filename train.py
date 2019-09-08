@@ -46,17 +46,17 @@ def on_epoch_end(epoch, _):
 
 if __name__ == "__main__":
 
-    if not os.path.isdir('./examples/'):
-        os.makedirs('./examples/')
+    if not os.path.isdir('examples/'):
+        os.makedirs('examples/')
+        print("examples folder created")
 
-    if not os.path.isdir('./logs/'):
-        os.makedirs('./logs/')
+    if not os.path.isdir('logs/'):
+        os.makedirs('logs/')
+        print("logs folder created")
 
 
     tokens, index, count, tokenizer = generate_tokens(input_file, n_sample=n_sample, seq_len=seq_len)
     reverse_word_map = dict(map(reversed, tokenizer.word_index.items()))
-
-    print(tokens)
 
     X, y, n_seq = generate_sequences(tokens, seq_len)
     print(X[1], y[1])
