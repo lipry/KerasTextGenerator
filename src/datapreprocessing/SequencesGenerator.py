@@ -18,7 +18,6 @@ class DataGenerator(Sequence):
     def __getitem__(self, index):
         indexes = self.indexes[index*self.batch_size:(index+1)*self.batch_size]
         X, y = self.__data_generation(indexes)
-
         return X, y
 
     def on_epoch_end(self):
@@ -27,8 +26,8 @@ class DataGenerator(Sequence):
             np.random.shuffle(self.indexes)
 
     def __data_generation(self, idx_sequence_temp):
-        X = np.empty((self.batch_size, self.seq_len))
-        y = np.empty(self.batch_size, dtype=int)
+        X = np.empty((self.batch_size, self.seq_len), dtype=np.int32)
+        y = np.empty(self.batch_size, dtype=np.int32)
         for i, seq_idx in enumerate(idx_sequence_temp):
             X[i, ] = self.sequences[seq_idx]
             y[i] = self.labels[seq_idx]
