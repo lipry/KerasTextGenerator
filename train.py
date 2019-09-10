@@ -59,7 +59,6 @@ if __name__ == "__main__":
     reverse_word_map = dict(map(reversed, tokenizer.word_index.items()))
 
     X, y, n_seq = generate_sequences(tokens, seq_len)
-    print(X[1], y[1])
 
     generator_params = {
             'batch_size': 64,
@@ -81,7 +80,6 @@ if __name__ == "__main__":
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
     early_stopping = EarlyStopping(monitor='val_loss', patience=20)
 
-    print("Generating model...")
     examples_file = open("./examples/example.txt", "w")
     history = model.fit_generator(generator=training_generator,
                                   validation_data=validation_generator,
