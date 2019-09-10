@@ -3,7 +3,7 @@ import os
 import numpy as np
 from keras.callbacks import LambdaCallback, EarlyStopping
 
-from keras.optimizers import RMSprop
+from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 
 from src.datapreprocessing.SequencesGenerator import DataGenerator
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     model = get_model(count, embedding_size=embedding_size, lstm_units=units)
 
-    opti = RMSprop(lr=0.0001)
+    opti = Adam(lr=0.001)
     model.compile(loss='categorical_crossentropy', optimizer=opti)
 
 
