@@ -1,5 +1,7 @@
 FROM tensorflow/tensorflow:latest-py3
 
+USER lipreri:stud
+
 # Install system packages
 RUN apt-get update
 

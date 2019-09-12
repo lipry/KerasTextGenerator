@@ -1,5 +1,7 @@
 FROM nvcr.io/nvidia/tensorflow:19.04-py3
 
+USER lipreri:stud
+
 # Install system packages
 RUN apt-get update
 
