@@ -1,5 +1,6 @@
-import logging
 import os
+
+from datetime import datetime
 import numpy as np
 from keras.callbacks import LambdaCallback, EarlyStopping
 
@@ -81,6 +82,7 @@ if __name__ == "__main__":
     early_stopping = EarlyStopping(monitor='val_loss', patience=20)
 
     examples_file = open("./examples/example.txt", "w")
+    examples_file.write("\n----Example from run of day: {}\n".format(datetime.now()))
     history = model.fit_generator(generator=training_generator,
                                   validation_data=validation_generator,
                                   epochs=epochs,
