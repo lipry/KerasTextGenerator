@@ -15,10 +15,10 @@ def generate_tokens(filename, n_sample=None, char_level=False, seq_len=20):
     if n_sample is not None:
         df = df.sample(n=n_sample)
 
-    start_token = ('| ' * seq_len)
+    start_token = "<s>"
     texts = '\n'.join((start_token + " " + df['text']).tolist())
     texts = re.sub(r'([.,:;!?])', r' \1 ', texts)
-    texts = re.sub(r'(\n)', r' \1 ', texts)
+    texts = re.sub(r'(\n)[\n]*', r' \1 ', texts)
     tokenizer = Tokenizer(char_level=char_level, filters='')
     tokenizer.fit_on_texts([texts])
 

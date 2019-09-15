@@ -18,7 +18,7 @@ input_file = "data/poems.csv"
 embedding_size = 100
 units = 256
 epochs = 100
-n_sample = None
+n_sample = 50
 
 
 def generate_poems(seed_text, next_words, model, max_sequence_len, temp):
@@ -31,7 +31,7 @@ def generate_poems(seed_text, next_words, model, max_sequence_len, temp):
         probs = model.predict(token_list, verbose=0)[0]
         y_class = sample(probs, temperature=temp)
         output_word = reverse_word_map[y_class] if y_class > 0 else ''
-        if output_word == "|":
+        if output_word == "<s>":
             break
         seed_text += output_word + ' '
         output += output_word + ' '
